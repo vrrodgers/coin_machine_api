@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2020_03_07_014903) do
 
   create_table "transactions", force: :cascade do |t|
     t.string "coin_name"
-    t.boolean "transaction_type"
+    t.integer "transaction_type"
     t.string "user_access_token"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
