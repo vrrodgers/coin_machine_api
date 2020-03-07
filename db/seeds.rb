@@ -1,7 +1,7 @@
 
 User.create!(
-  first_name: strawberry,
-  last_name: shortcake,
+  first_name: "strawberry",
+  last_name: "shortcake",
   email: Faker::Internet.email,
   admin: true
   ) 
@@ -9,8 +9,8 @@ User.create!(
 
 
 User.create!(
-    first_name: blueberry,
-    Last_name: muffin,
+    first_name: "blueberry",
+    Last_name: "muffin",
     email: Faker::Internet.email,
     admin: true
 
