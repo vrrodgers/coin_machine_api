@@ -33,7 +33,21 @@ class Api::V1::TransactionsController < ApplicationController
           else
             @coin.decrement!(:value, 1)
             if @coin.value < 4 
-             CoinMailer.low_coin_notification(@coin).deliver
+              @string = "
+                Your running low on " + @coin.name.pluralize+ ". There is only " + @coin.value.to_s + " left in the machine. 
+                "
+              @admins = User.where(admin: true).where.not(slack_url: nil).pluck(:slack_url)
+              @admins.each do |slack_url|
+                notifier = Slack::Notifier.new slack_url
+                @message = @string
+                a_ok_note = {
+                  fallback: "We need more coins",
+                  text: Slack::Notifier::Util::LinkFormatter.format(@message),
+                  color: "#4e2a84",
+                  mrkdwn: true
+                }
+                notifier.ping text: "Hello ", attachments: [a_ok_note]
+              end
             end
           end
           render json: @transaction, status: :created, location: api_v1_transaction_url(@transaction)
