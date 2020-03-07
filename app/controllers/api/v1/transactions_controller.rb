@@ -33,7 +33,7 @@ class Api::V1::TransactionsController < ApplicationController
           else
             @coin.decrement!(:value, 1)
             if @coin.value < 4 
-             CoinMailer.with(coin: @coin).new_coin_email.deliver_later
+             CoinMailer.new_coin_notification(@coin).deliver
             end
           end
           render json: @transaction, status: :created, location: api_v1_transaction_url(@transaction)
